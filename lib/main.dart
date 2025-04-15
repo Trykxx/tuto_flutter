@@ -1,69 +1,79 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'; // Importe le package Flutter pour utiliser les widgets Material Design.
 
 void main() {
-  runApp(const MyApp());
+  runApp(const MyApp()); // Exécute l'application Flutter en lançant MyApp comme widget racine.
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends StatelessWidget { // Déclare MyApp, un widget immuable qui étend StatelessWidget.
+  const MyApp({super.key}); // Constructeur de MyApp avec une clé optionnelle pour l'identification du widget.
 
-  // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false, // Permet de retirer la bannière "debug"
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
+  Widget build(BuildContext context) { // Méthode qui construit l'interface utilisateur.
+    return MaterialApp( // Retourne une application basée sur Material Design.
+      debugShowCheckedModeBanner: false, // Supprime la bannière "debug" en haut à droite.
+      title: 'Flutter Demo', // Définit le titre de l'application.
+      theme: ThemeData( // Définit le thème de l'application.
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue), // Définit un jeu de couleurs basé sur le vert.
       ),
-      home: const MyHomePage(title: 'Ma première application'),
+      home: const MyHomePage(title: 'Ma première application'), // Définit MyHomePage comme la page d'accueil.
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
+class MyHomePage extends StatefulWidget { // Déclare un widget avec un état mutable.
+  const MyHomePage({super.key, required this.title}); // Constructeur de MyHomePage avec un paramètre obligatoire `title`.
+  final String title; // Déclare un champ `title` de type String.
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<MyHomePage> createState() => _MyHomePageState(); // Crée l'état associé au widget.
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+class _MyHomePageState extends State<MyHomePage> { // Déclare l'état du widget MyHomePage.
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+  String name = "";
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { // Construit l'interface utilisateur de la page.
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+      backgroundColor: Theme.of(context).colorScheme.primary,// Scaffold fournit une structure de base à l'écran.
+      appBar: AppBar( // Barre d'application en haut de l'écran.
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary, // Définit la couleur de l'AppBar.
+        title: Text(widget.title), // Définit le titre de l'AppBar avec la valeur transmise au widget.
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+      body: Center( // Centre les éléments à l'écran.
+        child: Card(
+          elevation: 8,
+          margin: const EdgeInsets.all(16),
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Image.asset("assets/Dash+Dart+PNG++-+white.png"),
+                Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 24),
+                    child: Text(
+                        "Bienvenue $name",
+                      style: Theme.of(context).textTheme.headlineMedium,
+                    ),
+                ),
+                TextField(
+                  onSubmitted: (newValue) {
+                    setState(() {
+                      name = newValue;
+                    });
+                  },
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    label: Text("Nom du Flutteriste"),
+                    hintText: "Entrez votre nom"
+                  ),
+                )
+              ],
             ),
-          ],
-        ),
+          ),
+        )
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
